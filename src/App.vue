@@ -1,12 +1,44 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <div v-if="st">
+      <router-view/>
     </div>
-    <router-view/>
+
+    <div v-else>
+      Loading
+    </div>
   </div>
 </template>
+
+<script>
+import {mapGetters, mapState} from "vuex";
+export default {
+  data() {
+    return {
+      st: false
+    };
+  },
+  beforeMount() {
+    this.$router.push({name: 'loader'})
+  },
+  computed: {
+    ...mapState({
+      user: state => state.auth.user,
+    })
+  },
+  watch: {
+    user(user) {
+      this.st = true;
+      if (user) {
+        this.$router.push({name: 'home'});
+      } else {
+        this.$router.push({name: 'login'});
+      }
+    }
+  }
+}
+</script>
+
 
 <style>
 #app {
