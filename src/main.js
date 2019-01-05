@@ -5,7 +5,10 @@ import router from "./router";
 import store from "./store";
 import "./registerServiceWorker";
 
+import "bulma/css/bulma.min.css";
 import "firebase/auth";
+import "firebase/database";
+import Vuefire from "vuefire";
 
 // Initialize Firebase
 var config = {
@@ -24,6 +27,8 @@ firebase.auth().onAuthStateChanged(function(user) {
   store.commit("SET_USER", user);
 });
 
+Vue.use(Vuefire);
+
 Vue.prototype.auth = {
   client: firebase.auth(),
   login(email, password) {
@@ -37,6 +42,47 @@ Vue.prototype.auth = {
   },
   resetPass(email) {
     return this.client.sendPasswordResetEmail(email);
+  }
+};
+import dayjs from "dayjs";
+Vue.prototype.db = {
+  userId() {
+    return firebase.auth().currentUser.uid;
+  },
+  db: firebase.database(),
+  addGoal(goal) {
+    return this.db.ref(`/user/${this.userId()}/goals`).push(goal);
+  },
+  getGoals() {
+    return this.db.ref(`/user/${this.userId()}/goals`);
+  },
+  getGoal(id) {
+    return this.db.ref(`/user/${this.userId()}/goals/${id}`);
+  },
+  removeGoal(id) {
+    this.db.ref(`/goals/${id}`).remove();
+    return this.db.ref(`/user/${this.userId()}/goals/${id}`).remove();
+  },
+  addRate(goal, date, rate, comment = "") {
+    const sDate = dayjs(date);
+    return this.db
+      .ref(
+        `/goals/${goal}/rates/${sDate.year()}/${sDate.month()}/${sDate.date()}`
+      )
+      .set({
+        rate,
+        comment
+      });
+  },
+  getRates(goal, date) {
+    const sDate = dayjs(date);
+    return this.db.ref(`/goals/${goal}/rates/${sDate.year()}/${sDate.month()}`);
+  },
+  getRate(goal, date) {
+    const sDate = dayjs(date);
+    return this.db.ref(
+      `/goals/${goal}/rates/${sDate.year()}/${sDate.month()}/${sDate.date()}`
+    );
   }
 };
 

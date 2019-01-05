@@ -1,12 +1,33 @@
 <template>
-  <div>
-  <form @submit.prevent="submit">
-    <input type="email" v-model="email"/>
-    <input type="password" v-model="password"/>
-    <input type="submit" value="Login"/>
-  </form>
-  <button @mousedown="signin">Sign in</button>
-  <button @mousedown="reset">Reset Password</button>
+  <div id="auth">
+    <form @submit.prevent="submit">
+      <div class="field">
+        <p class="control has-icons-left has-icons-right">
+          <input class="input" type="email" placeholder="Email" v-model="email">
+          <span class="icon is-small is-left">
+            <i class="fas fa-envelope"></i>
+          </span>
+          <span class="icon is-small is-right">
+            <i class="fas fa-check"></i>
+          </span>
+        </p>
+      </div>
+      <div class="field">
+        <p class="control has-icons-left">
+          <input class="input" type="password" placeholder="Password" v-model="password">
+          <span class="icon is-small is-left">
+            <i class="fas fa-lock"></i>
+          </span>
+        </p>
+      </div>
+      <div class="field">
+        <p class="control">
+          <input type="submit" class="button is-success" value="Login">
+          <button class="button is-success" @mousedown="signin">Sign in</button>
+          <a @mousedown="reset">Reset Password</a>
+        </p>
+      </div>
+    </form>
   </div>
 </template>
 
@@ -31,3 +52,13 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+#auth {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  justify-content: center;
+  align-items: center;
+}
+</style>

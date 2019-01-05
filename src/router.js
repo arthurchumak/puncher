@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Router from "vue-router";
+import dayjs from "dayjs";
 
 Vue.use(Router);
 
@@ -8,15 +9,66 @@ export default new Router({
   base: process.env.BASE_URL,
   routes: [
     {
-      path: "/",
-      name: "home",
-      component: () => import(/* webpackChunkName: "home" */ "./views/Home.vue")
-    },
-    {
       path: "/login",
       name: "login",
       component: () =>
         import(/* webpackChunkName: "login" */ "./views/Login.vue")
+    },
+    {
+      path: "/",
+      name: "layout",
+      component: () =>
+        import(/* webpackChunkName: "layout" */ "./views/Layout.vue"),
+      beforeEnter(to, from, next) {
+        next();
+      },
+      children: [
+        {
+          path: "/",
+          name: "home",
+          component: () =>
+            import(/* webpackChunkName: "home" */ "./views/Home.vue")
+        },
+        {
+          path: "/goal/new",
+          name: "newgoal",
+          component: () =>
+            import(/* webpackChunkName: "newgoal" */ "./views/NewGoal.vue")
+        },
+        {
+          path: "/goal/:id/",
+          name: "goal",
+          redirect: to => {
+            const today = dayjs();
+            return {
+              name: "goalMonth",
+              params: {
+                id: to.params.id,
+                year: today.year(),
+                month: today.month()
+              }
+            };
+          }
+        },
+        {
+          path: "/goal/:id/:year/:month",
+          name: "goalMonth",
+          component: () =>
+            import(/* webpackChunkName: "goal" */ "./views/Goal.vue")
+        },
+        {
+          path: "/goal/:id/:year/:month/:date",
+          name: "rate",
+          component: () =>
+            import(/* webpackChunkName: "rate" */ "./views/Rate.vue")
+        },
+        {
+          path: "/profile",
+          name: "profile",
+          component: () =>
+            import(/* webpackChunkName: "profile" */ "./views/Profile.vue")
+        }
+      ]
     }
   ]
 });

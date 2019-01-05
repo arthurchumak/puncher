@@ -4,39 +4,34 @@
       <router-view/>
     </div>
 
-    <div v-else>
-      Loading
-    </div>
+    <div v-else>Loading</div>
   </div>
 </template>
 
 <script>
-import {mapGetters, mapState} from "vuex";
+import { mapState } from "vuex";
 export default {
   data() {
     return {
       st: false
     };
   },
-  beforeMount() {
-    this.$router.push({name: 'loader'})
-  },
   computed: {
     ...mapState({
-      user: state => state.auth.user,
+      user: state => state.auth.user
     })
   },
   watch: {
     user(user) {
       this.st = true;
       if (user) {
-        this.$router.push({name: 'home'});
+        this.$router.push({ name: "home" });
       } else {
-        this.$router.push({name: 'login'});
+        this.$router.push({ name: "login" });
       }
     }
   }
-}
+};
 </script>
 
 
