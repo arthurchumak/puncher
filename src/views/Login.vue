@@ -41,10 +41,18 @@ export default {
   },
   methods: {
     submit() {
-      this.auth.login(this.email, this.password);
+      this.auth.login(this.email, this.password).then(() => {
+        this.$router.push({
+          name: "home"
+        });
+      });
     },
     signin() {
-      this.auth.signin(this.email, this.password);
+      this.auth.signin(this.email, this.password).then(() => {
+        this.$router.push({
+          name: "home"
+        });
+      });
     },
     reset() {
       this.auth.resetPass(this.email);

@@ -11,14 +11,7 @@ import "firebase/database";
 import Vuefire from "vuefire";
 
 // Initialize Firebase
-var config = {
-  apiKey: "AIzaSyBbx3TYURH7qLbBUBJShzDCpnTM4YKP5XU",
-  authDomain: "puncher-3a600.firebaseapp.com",
-  databaseURL: "https://puncher-3a600.firebaseio.com",
-  projectId: "puncher-3a600",
-  storageBucket: "puncher-3a600.appspot.com",
-  messagingSenderId: "976735465243"
-};
+const config = require("./fireconfig.json");
 firebase.initializeApp(config);
 
 Vue.config.productionTip = false;

@@ -39,7 +39,7 @@ export default {
   data() {
     return {
       goal: null,
-      rates: null
+      rates: {}
     };
   },
   computed: {

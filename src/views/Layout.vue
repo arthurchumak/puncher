@@ -2,7 +2,7 @@
   <div v-if="$store.state.auth.user">
     <div id="navbar">
       <a @mousedown="$router.push('/')">
-        <span class="icon is-large">👞</span>
+        <span class="icon is-large">✊</span>
       </a>
 
       <div>

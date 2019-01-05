@@ -24,9 +24,7 @@ export default {
   watch: {
     user(user) {
       this.st = true;
-      if (user) {
-        this.$router.push({ name: "home" });
-      } else {
+      if (!user) {
         this.$router.push({ name: "login" });
       }
     }
