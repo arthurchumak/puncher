@@ -10,18 +10,21 @@
       <h3 class="title is-3">{{date.format('DD')}}</h3>
       <button @mousedown="dateWalk(1)" class="button is-rounded" style="width: 37px; margin: 4px;">→</button>
     </div>
-    <form @submit.prevent="submit">
-      <div id="rater">
-        <a v-for="rate of rates" :key="rate.value">
-          <span
-            :class="{ active: rate.value === selectedRate }"
-            @mousedown="select(rate.value)"
-          >{{rate.name}}</span>
-        </a>
-      </div>
-      <textarea class="textarea" placeholder="Comment" v-model="comment"></textarea>
-      <input type="submit">
-    </form>
+    <section class="section">
+      <form @submit.prevent="submit">
+        <div id="rater">
+          <a v-for="rate of rates" :key="rate.value">
+            <span
+              :class="{ active: rate.value === selectedRate }"
+              @mousedown="select(rate.value)"
+            >{{rate.name}}</span>
+          </a>
+        </div>
+        <textarea class="textarea" placeholder="Comment" v-model="comment"></textarea>
+        <br>
+        <input class="button is-fullwidth" type="submit">
+      </form>
+    </section>
   </div>
 </template>
 
@@ -71,7 +74,7 @@ export default {
         this.$route.params.id,
         this.date,
         this.selectedRate,
-        this.comment
+        this.comment || null
       );
       this.routeMonth();
     },
@@ -102,13 +105,11 @@ export default {
     date: {
       immediate: true,
       handler(date) {
-        this.db
-          .getRate(this.$route.params.id, this.date)
-          .once("value", snapshot => {
-            const rate = snapshot.val() || {};
-            this.selectedRate = rate.rate;
-            this.comment = rate.comment;
-          });
+        this.db.getRate(this.$route.params.id, date).once("value", snapshot => {
+          const rate = snapshot.val() || {};
+          this.selectedRate = rate.rate;
+          this.comment = rate.comment;
+        });
       }
     }
   }
@@ -121,14 +122,17 @@ export default {
   display: flex;
   justify-content: space-around;
 }
+#rater {
+  display: flex;
+  justify-content: center;
+}
 #rater a {
-  font-size: 4em;
+  font-size: 2.7em;
+  margin: 0px 10px;
 }
 #rater a :not(.active) {
   opacity: 0.5;
 }
-form {
-  max-width: 80vw;
-  text-align: center;
+form textarea {
 }
 </style>

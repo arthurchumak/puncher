@@ -1,7 +1,10 @@
 <template>
   <div>
     <a @mousedown="$router.push({ name: 'goal', params: { id: $route.params.id } })">
-      <h1 class="title is-1">{{goal.title}}</h1>
+      <h1 class="title is-1">
+        <template v-if="goal">{{goal.title}}</template>
+        <template v-else>...</template>
+      </h1>
     </a>
     <div id="date-selector">
       <button @mousedown="monthGo(-1)" class="button is-rounded" style="width: 37px; margin: 4px;">←</button>
@@ -9,7 +12,7 @@
       <button @mousedown="monthGo(1)" class="button is-rounded" style="width: 37px; margin: 4px;">→</button>
     </div>
     <div id="month" v-if="rates">
-      <a class="day" v-for="day of lastMonthDays"></a>
+      <a class="day" v-for="day of lastMonthDays" :key="day"></a>
       <a
         v-for="day of month"
         :key="day"
@@ -42,18 +45,18 @@ export default {
   computed: {
     lastMonthDays() {
       const WEEK_START = 1;
-      let walker = this.date;
+      let walker = this.date.startOf("month");
       const days = [];
       while (walker.day() != WEEK_START) {
-        days.push(1);
         walker = walker.subtract(1, "day");
+        days.push(walker.unix());
       }
       return days;
     },
     date() {
       return dayjs(
         `${this.$route.params.year}/${this.$route.params.month + 1}/1`
-      ).startOf("month");
+      );
     },
     month() {
       const month = [];
@@ -89,7 +92,7 @@ export default {
       immediate: true,
       handler(date) {
         this.db
-          .getRates(this.$route.params.id, this.date)
+          .getRates(this.$route.params.id, date)
           .once("value", snapshot => {
             this.rates = snapshot.val() || {};
           });
@@ -108,6 +111,7 @@ export default {
 #month {
   display: flex;
   flex-wrap: wrap;
+  margin: 0px 1vw;
 }
 .day {
   width: 10vw;

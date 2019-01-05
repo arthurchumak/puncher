@@ -27,7 +27,7 @@ export default new Router({
           path: "/",
           name: "home",
           component: () =>
-            import(/* webpackChunkName: "home" */ "./views/Home.vue")
+            import(/* webpackChunkName: "goals" */ "./views/Goals.vue")
         },
         {
           path: "/goal/new",
@@ -54,13 +54,13 @@ export default new Router({
           path: "/goal/:id/:year/:month",
           name: "goalMonth",
           component: () =>
-            import(/* webpackChunkName: "goal" */ "./views/Goal.vue")
+            import(/* webpackChunkName: "month" */ "./views/Month.vue")
         },
         {
           path: "/goal/:id/:year/:month/:date",
           name: "rate",
           component: () =>
-            import(/* webpackChunkName: "rate" */ "./views/Rate.vue")
+            import(/* webpackChunkName: "day" */ "./views/Day.vue")
         },
         {
           path: "/profile",
