@@ -15,11 +15,11 @@
       <a class="day" v-for="day of lastMonthDays" :key="day"></a>
       <a
         v-for="day of month"
-        :key="day"
+        :key="day.unix()"
         class="button is-rounded day"
-        :class="{ 'is-warning': rates[day] && rates[day].rate==0, 'is-success': rates[day] && rates[day].rate==1, 'is-danger': rates[day] && rates[day].rate==-1, }"
-        @mousedown="$router.push({ name: 'rate', params: { id: $route.params.id, year: $route.params.year, month: $route.params.month, date: day } })"
-      >{{day}}</a>
+        :class="{ 'today': day.isSame(new Date(), 'day'), 'is-warning': rates[day.date()] && rates[day.date()].rate==0, 'is-success': rates[day.date()] && rates[day.date()].rate==1, 'is-danger': rates[day.date()] && rates[day.date()].rate==-1, }"
+        @mousedown="$router.push({ name: 'rate', params: { id: $route.params.id, year: $route.params.year, month: $route.params.month, date: day.date() } })"
+      >{{day.date()}}</a>
     </div>
     <p>
       <button @mousedown="remove">Delete</button>
@@ -45,7 +45,7 @@ export default {
   computed: {
     lastMonthDays() {
       const WEEK_START = 1;
-      let walker = this.date.startOf("month");
+      let walker = this.date;
       const days = [];
       while (walker.day() != WEEK_START) {
         walker = walker.subtract(1, "day");
@@ -56,13 +56,13 @@ export default {
     date() {
       return dayjs(
         `${this.$route.params.year}/${this.$route.params.month + 1}/1`
-      );
+      ).startOf("month");
     },
     month() {
       const month = [];
       const days = this.date.daysInMonth();
-      for (let i = 1; i <= days; i++) {
-        month.push(i);
+      for (let i = 0; i < days; i++) {
+        month.push(this.date.add(i, "day"));
       }
       return month;
     }
@@ -116,5 +116,9 @@ export default {
 .day {
   width: 10vw;
   margin: 2vw;
+}
+.today {
+  font-weight: bold;
+  border: 1px solid;
 }
 </style>
