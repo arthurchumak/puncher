@@ -2,13 +2,10 @@
   <div id="auth">
     <form @submit.prevent="submit">
       <div class="field">
-        <p class="control has-icons-left has-icons-right">
+        <p class="control has-icons-left">
           <input class="input" type="email" placeholder="Email" v-model="email">
           <span class="icon is-small is-left">
             <i class="fas fa-envelope"></i>
-          </span>
-          <span class="icon is-small is-right">
-            <i class="fas fa-check"></i>
           </span>
         </p>
       </div>
@@ -20,13 +17,19 @@
           </span>
         </p>
       </div>
-      <div class="field">
+      <div class="field is-grouped">
         <p class="control">
           <input type="submit" class="button is-success" value="Login">
-          <button class="button is-success" @mousedown="signin">Sign in</button>
-          <a @mousedown="reset">Reset Password</a>
+        </p>
+        <p class="control">
+          <button class="button is-text" @mousedown="signin">Sign in</button>
+        </p>
+        <p class="control">
+          <button class="button is-text" @mousedown="reset">Reset password</button>
         </p>
       </div>
+      <p>
+      </p>
     </form>
   </div>
 </template>
