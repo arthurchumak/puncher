@@ -2,6 +2,14 @@ import Vue from "vue";
 import Router from "vue-router";
 import dayjs from "dayjs";
 
+import Day from "./views/Day";
+import Goals from "./views/Goals";
+import Layout from "./views/Layout";
+import Login from "./views/Login";
+import Month from "./views/Month";
+import NewGoal from "./views/NewGoal";
+import Profile from "./views/Profile";
+
 Vue.use(Router);
 
 export default new Router({
@@ -11,14 +19,12 @@ export default new Router({
     {
       path: "/login",
       name: "login",
-      component: () =>
-        import(/* webpackChunkName: "login" */ "./views/Login.vue")
+      component: Login
     },
     {
       path: "/",
       name: "layout",
-      component: () =>
-        import(/* webpackChunkName: "layout" */ "./views/Layout.vue"),
+      component: Layout,
       beforeEnter(to, from, next) {
         next();
       },
@@ -26,14 +32,12 @@ export default new Router({
         {
           path: "/",
           name: "home",
-          component: () =>
-            import(/* webpackChunkName: "goals" */ "./views/Goals.vue")
+          component: Goals
         },
         {
           path: "/goal/new",
           name: "newgoal",
-          component: () =>
-            import(/* webpackChunkName: "newgoal" */ "./views/NewGoal.vue")
+          component: NewGoal
         },
         {
           path: "/goal/:id/",
@@ -53,20 +57,17 @@ export default new Router({
         {
           path: "/goal/:id/:year/:month",
           name: "goalMonth",
-          component: () =>
-            import(/* webpackChunkName: "month" */ "./views/Month.vue")
+          component: Month
         },
         {
           path: "/goal/:id/:year/:month/:date",
           name: "rate",
-          component: () =>
-            import(/* webpackChunkName: "day" */ "./views/Day.vue")
+          component: Day
         },
         {
           path: "/profile",
           name: "profile",
-          component: () =>
-            import(/* webpackChunkName: "profile" */ "./views/Profile.vue")
+          component: Profile
         }
       ]
     }
