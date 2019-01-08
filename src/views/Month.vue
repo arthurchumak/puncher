@@ -111,11 +111,11 @@ export default {
 #month {
   display: flex;
   flex-wrap: wrap;
-  margin: 0px 1vw;
+  margin: 0px 1%;
 }
 .day {
-  width: 10vw;
-  margin: 2vw;
+  width: 10%;
+  margin: 2%;
 }
 .today {
   font-weight: bold;

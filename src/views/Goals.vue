@@ -1,12 +1,8 @@
 <template>
   <div>
-    <section class="goal dark" v-for="(goal, id) of goals" :key="id">
-      <div @mousedown="$router.push({name: 'goal', params: {id}})">{{goal.title}}</div>
-    </section>
+    <a class="goal dark" v-for="(goal, id) of goals" :key="id" @mousedown="$router.push({name: 'goal', params: {id}})">{{goal.title}}</a>
 
-    <section class="goal">
-      <div @mousedown="$router.push({name: 'newgoal'})">+</div>
-    </section>
+    <a class="goal" @mousedown="$router.push({name: 'newgoal'})">+</a>
   </div>
 </template>
 
@@ -43,8 +39,13 @@ export default {
   font-size: 2em;
   font-weight: bold;
 }
+
 .dark {
   background: #2d2d2d;
+  color: white;
+}
+.dark:hover {
+  background: black;
   color: white;
 }
 .border {
