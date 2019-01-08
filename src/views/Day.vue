@@ -36,7 +36,7 @@ export default {
     return {
       rates: [
         {
-          name: "😊",
+          name: "☹️",
           value: -1
         },
         {
@@ -44,7 +44,7 @@ export default {
           value: 0
         },
         {
-          name: "☹️",
+          name: "😊",
           value: 1
         }
       ],
