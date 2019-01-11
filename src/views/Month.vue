@@ -1,7 +1,7 @@
 <template>
   <div>
     <a @mousedown="$router.push({ name: 'goal', params: { id: $route.params.id } })">
-      <h1 class="title is-1">
+      <h1 class="title is-1 has-text-centered">
         <template v-if="goal">{{goal.title}}</template>
         <template v-else>...</template>
       </h1>

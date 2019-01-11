@@ -1,14 +1,8 @@
 import Vue from "vue";
-import firebase from "firebase/app";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import "./registerServiceWorker";
-
-import "bulma/css/bulma.min.css";
-import "firebase/auth";
-import "firebase/database";
-import Vuefire from "vuefire";
 
 // Initialize Firebase
 const config = require("./fireconfig.json");
@@ -19,8 +13,6 @@ Vue.config.productionTip = false;
 firebase.auth().onAuthStateChanged(function(user) {
   store.commit("SET_USER", user);
 });
-
-Vue.use(Vuefire);
 
 Vue.prototype.auth = {
   client: firebase.auth(),

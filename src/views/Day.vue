@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <h3 class="title is-3" @mousedown="routeMonth">{{date.format('MMM YYYY')}}</h3>
+  <section class="section">
+    <h3 class="title is-3 has-text-centered" @mousedown="routeMonth">{{date.format('MMM YYYY')}}</h3>
     <div id="date">
       <button
         @mousedown="dateWalk(-1)"
@@ -10,22 +10,20 @@
       <h3 class="title is-3">{{date.format('DD')}}</h3>
       <button @mousedown="dateWalk(1)" class="button is-rounded" style="width: 37px; margin: 4px;">→</button>
     </div>
-    <section class="section">
-      <form @submit.prevent="submit">
-        <div id="rater">
-          <a v-for="rate of rates" :key="rate.value">
-            <span
-              :class="{ active: rate.value === selectedRate }"
-              @mousedown="select(rate.value)"
-            >{{rate.name}}</span>
-          </a>
-        </div>
-        <textarea class="textarea" placeholder="Comment" v-model="comment"></textarea>
-        <br>
-        <input class="button is-fullwidth" type="submit">
-      </form>
-    </section>
-  </div>
+    <form @submit.prevent="submit">
+      <div id="rater">
+        <a v-for="rate of rates" :key="rate.value">
+          <span
+            :class="{ active: rate.value === selectedRate }"
+            @mousedown="select(rate.value)"
+          >{{rate.name}}</span>
+        </a>
+      </div>
+      <textarea class="textarea" placeholder="Comment" v-model="comment"></textarea>
+      <br>
+      <input class="button is-fullwidth" type="submit">
+    </form>
+  </section>
 </template>
 
 <script>
