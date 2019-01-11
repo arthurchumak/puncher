@@ -21,8 +21,8 @@
         @mousedown="$router.push({ name: 'rate', params: { id: $route.params.id, year: $route.params.year, month: $route.params.month, date: day.date() } })"
       >{{day.date()}}</a>
     </div>
-    <p>
-      <button @mousedown="remove">Delete</button>
+    <br><p class="has-text-centered">
+      <button class="button is-danger" @mousedown="remove">Delete</button>
     </p>
   </div>
 </template>
