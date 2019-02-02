@@ -36,23 +36,23 @@ Vue.prototype.db = {
   },
   db: firebase.database(),
   addGoal(goal) {
-    return this.db.ref(`/user/${this.userId()}/goals`).push(goal);
+    return this.db.ref(`/users/${this.userId()}/goals`).push(goal);
   },
   getGoals() {
-    return this.db.ref(`/user/${this.userId()}/goals`);
+    return this.db.ref(`/users/${this.userId()}/goals`);
   },
   getGoal(id) {
-    return this.db.ref(`/user/${this.userId()}/goals/${id}`);
+    return this.db.ref(`/users/${this.userId()}/goals/${id}`);
   },
   removeGoal(id) {
-    this.db.ref(`/goals/${id}`).remove();
-    return this.db.ref(`/user/${this.userId()}/goals/${id}`).remove();
+    this.db.ref(`/users/${this.userId()}/goals/${id}`).remove();
+    return this.db.ref(`/users/${this.userId()}/goals/${id}`).remove();
   },
   addRate(goal, date, rate, comment = "") {
     const sDate = dayjs(date);
     return this.db
       .ref(
-        `/goals/${goal}/rates/${sDate.year()}/${sDate.month()}/${sDate.date()}`
+        `/users/${this.userId()}/goals/${goal}/rates/${sDate.year()}/${sDate.month()}/${sDate.date()}`
       )
       .set({
         rate,
@@ -61,12 +61,12 @@ Vue.prototype.db = {
   },
   getRates(goal, date) {
     const sDate = dayjs(date);
-    return this.db.ref(`/goals/${goal}/rates/${sDate.year()}/${sDate.month()}`);
+    return this.db.ref(`/users/${this.userId()}/goals/${goal}/rates/${sDate.year()}/${sDate.month()}`);
   },
   getRate(goal, date) {
     const sDate = dayjs(date);
     return this.db.ref(
-      `/goals/${goal}/rates/${sDate.year()}/${sDate.month()}/${sDate.date()}`
+      `/users/${this.userId()}/goals/${goal}/rates/${sDate.year()}/${sDate.month()}/${sDate.date()}`
     );
   }
 };
