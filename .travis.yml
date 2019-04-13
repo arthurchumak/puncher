@@ -9,3 +9,6 @@ install:
   - npm i
 after_success:
   - firebase deploy --project chromdays --token $FIREBASE_TOKEN
+branches:
+  only:
+    - master
