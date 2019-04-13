@@ -116,6 +116,10 @@ export default {
 
 
 <style>
+section {
+  max-width: 800px;
+  margin: auto;
+}
 #date {
   display: flex;
   justify-content: space-around;
