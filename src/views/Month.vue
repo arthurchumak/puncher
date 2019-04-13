@@ -111,7 +111,8 @@ export default {
 #month {
   display: flex;
   flex-wrap: wrap;
-  margin: 0px 1%;
+  max-width: 800px;
+  margin: auto;
 }
 .day {
   width: 10%;
