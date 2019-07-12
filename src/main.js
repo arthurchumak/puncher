@@ -1,14 +1,10 @@
+/* eslint-disable no-undef */
 import Vue from "vue";
+import dayjs from "dayjs";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 // import "./registerServiceWorker";
-
-// Initialize Firebase
-const config = require("./fireconfig.json");
-firebase.initializeApp(config);
-
-Vue.config.productionTip = false;
 
 firebase.auth().onAuthStateChanged(function(user) {
   store.commit("SET_USER", user);
@@ -29,7 +25,7 @@ Vue.prototype.auth = {
     return this.client.sendPasswordResetEmail(email);
   }
 };
-import dayjs from "dayjs";
+
 Vue.prototype.db = {
   userId() {
     return firebase.auth().currentUser.uid;
