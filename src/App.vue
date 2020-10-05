@@ -1,37 +1,30 @@
 <template>
   <div id="app">
-    <div v-if="st">
       <router-view/>
-    </div>
-
-    <div v-else>Loading</div>
   </div>
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapMutations, mapState } from "vuex";
+import { mapActions } from "vuex";
+
 export default {
-  data() {
-    return {
-      st: false
-    };
+  beforeRouteEnter() {
+    console.log('beforeRouteEnter');
+    this.setUser(firebase.auth().currentUser);
   },
   computed: {
     ...mapState({
-      user: state => state.auth.user
+      auth: state => state.auth
     })
   },
-  watch: {
-    user(user) {
-      this.st = true;
-      if (!user) {
-        this.$router.push({ name: "login" });
-      }
-    }
+  methods: {
+    ...mapMutations({
+      setUser: "SET_USER"
+    })
   }
 };
 </script>
-
 
 <style>
 #app {

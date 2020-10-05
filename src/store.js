@@ -5,11 +5,17 @@ Vue.use(Vuex);
 
 const auth = {
   state: {
-    user: {}
+    user: null,
+    loading: true
+  },
+  getters: {
+    isAuth: state => state.user && state.user.uid
   },
   mutations: {
     SET_USER(state, payload) {
+      console.log('SET_USER', payload);
       state.user = payload;
+      state.loading = false;
     }
   }
 };

@@ -6,20 +6,21 @@ import router from "./router";
 import store from "./store";
 // import "./registerServiceWorker";
 
-firebase.auth().onAuthStateChanged(function(user) {
-  store.commit("SET_USER", user);
-});
-
 Vue.prototype.auth = {
   client: firebase.auth(),
   login(email, password) {
-    return this.client.signInWithEmailAndPassword(email, password);
+    return this.client.signInWithEmailAndPassword(email, password).then(({user}) => {
+      store.commit("SET_USER", user);
+    });
   },
   logout() {
+    store.commit("SET_USER", null);
     return this.client.signOut();
   },
   signin(email, password) {
-    return this.client.createUserWithEmailAndPassword(email, password);
+    return this.client.createUserWithEmailAndPassword(email, password).then(({user}) => {
+      store.commit("SET_USER", user);
+    });
   },
   resetPass(email) {
     return this.client.sendPasswordResetEmail(email);
@@ -28,7 +29,8 @@ Vue.prototype.auth = {
 
 Vue.prototype.db = {
   userId() {
-    return firebase.auth().currentUser.uid;
+    const user = firebase.auth().currentUser;
+    return user ? user.uid : 0;
   },
   db: firebase.database(),
   addGoal(goal) {
@@ -67,8 +69,19 @@ Vue.prototype.db = {
   }
 };
 
-new Vue({
-  router,
-  store,
-  render: h => h(App)
-}).$mount("#app");
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(route => route.meta.requiresAuth) && !store.state.auth.user) {
+    next('/login');
+  }
+  next();
+})
+
+const onAuthStateChangedUnsubscribe = firebase.auth().onAuthStateChanged(function(user) {
+  onAuthStateChangedUnsubscribe();
+  store.commit("SET_USER", user);
+  new Vue({
+    router,
+    store,
+    render: h => h(App)
+  }).$mount("#app");
+});

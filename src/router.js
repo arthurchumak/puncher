@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import Vue from "vue";
 import Router from "vue-router";
 import dayjs from "dayjs";
@@ -9,10 +10,11 @@ import Login from "./views/Login";
 import Month from "./views/Month";
 import NewGoal from "./views/NewGoal";
 import Profile from "./views/Profile";
+import ErrorPage from "./views/Error";
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
   mode: "history",
   base: process.env.BASE_URL,
   routes: [
@@ -25,9 +27,7 @@ export default new Router({
       path: "/",
       name: "layout",
       component: Layout,
-      beforeEnter(to, from, next) {
-        next();
-      },
+      meta: { requiresAuth: true },
       children: [
         {
           path: "/",
@@ -70,6 +70,13 @@ export default new Router({
           component: Profile
         }
       ]
+    },
+    {
+      path: "*",
+      component: ErrorPage,
     }
   ]
 });
+
+
+export default router;

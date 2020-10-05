@@ -46,7 +46,7 @@ export default {
   },
   methods: {
     submit() {
-      this.auth.login(this.email, this.password).then(() => {
+      this.auth.login(this.email, this.password).then((user) => {
         this.$router.push({
           name: "home"
         });
@@ -56,7 +56,7 @@ export default {
       });
     },
     signin() {
-      this.auth.signin(this.email, this.password).then(() => {
+      this.auth.signin(this.email, this.password).then((user) => {
         this.$router.push({
           name: "home"
         });
