@@ -9,22 +9,24 @@
     "deploy": "firebase deploy --only hosting"
   },
   "dependencies": {
-    "core-js": "^2.6.5",
-    "dayjs": "^1.7.8",
-    "register-service-worker": "^1.6.2",
-    "vue": "^2.6.10",
-    "vue-router": "^3.0.3",
-    "vuex": "^3.0.1"
+    "core-js": "^2.6.11",
+    "dayjs": "^1.9.1",
+    "firebase": "^7.22.0",
+    "firebase-tools": "^8.11.2",
+    "register-service-worker": "^1.7.1",
+    "vue": "^2.6.12",
+    "vue-router": "^3.4.5",
+    "vuex": "^3.5.1"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.9.0",
-    "@vue/cli-plugin-eslint": "^3.9.0",
-    "@vue/cli-plugin-pwa": "^3.9.0",
-    "@vue/cli-service": "^3.9.0",
+    "@vue/cli-plugin-babel": "^3.12.1",
+    "@vue/cli-plugin-eslint": "^3.12.1",
+    "@vue/cli-plugin-pwa": "^3.12.1",
+    "@vue/cli-service": "^3.12.1",
     "@vue/eslint-config-prettier": "^4.0.1",
-    "babel-eslint": "^10.0.1",
+    "babel-eslint": "^10.1.0",
     "eslint": "^5.16.0",
-    "eslint-plugin-vue": "^5.0.0",
-    "vue-template-compiler": "^2.6.10"
+    "eslint-plugin-vue": "^5.2.3",
+    "vue-template-compiler": "^2.6.12"
   }
 }

@@ -15,6 +15,7 @@ Vue.prototype.auth = {
   },
   logout() {
     store.commit("SET_USER", null);
+    router.push('/');
     return this.client.signOut();
   },
   signin(email, password) {
