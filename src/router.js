@@ -72,6 +72,10 @@ const router = new Router({
       ]
     },
     {
+      path: "/index.html",
+      redirect: '/'
+    },
+    {
       path: "*",
       component: ErrorPage,
     }
