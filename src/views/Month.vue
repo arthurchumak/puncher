@@ -1,25 +1,27 @@
 <template>
   <div>
-    <a @mousedown="$router.push({ name: 'goal', params: { id: $route.params.id } })">
+    <router-link to="..">
       <h1 class="title is-1 has-text-centered">
         <template v-if="goal">{{goal}}</template>
         <template v-else>...</template>
       </h1>
-    </a>
+    </router-link>
     <div id="date-selector">
-      <button @mousedown="monthGo(-1)" class="button is-rounded" style="width: 37px; margin: 4px;">←</button>
+      <router-link :to="prevMonthLink" class="button is-rounded" style="width: 37px; margin: 4px;">←</router-link>
       <h3 class="title is-3">{{date.format('MMM YYYY')}}</h3>
-      <button @mousedown="monthGo(1)" class="button is-rounded" style="width: 37px; margin: 4px;">→</button>
+      <router-link :to="nextMonthLink" class="button is-rounded" style="width: 37px; margin: 4px;">→</router-link>
     </div>
     <div id="month" v-if="rates">
       <a class="day" v-for="day of lastMonthDays" :key="day"></a>
-      <a
+      <router-link
         v-for="day of month"
         :key="day.unix()"
         class="button is-rounded day"
         :class="{ 'today': day.isSame(new Date(), 'day'), 'is-warning': rates[day.date()] && rates[day.date()].rate==0, 'is-success': rates[day.date()] && rates[day.date()].rate==1, 'is-danger': rates[day.date()] && rates[day.date()].rate==-1, }"
-        @mousedown="$router.push({ name: 'rate', params: { id: $route.params.id, year: $route.params.year, month: $route.params.month, date: day.date() } })"
-      >{{day.date()}}</a>
+        :to="{ name: 'rate', params: { id: $route.params.id, year: $route.params.year, month: $route.params.month, date: day.date() } }"
+      >
+        {{day.date()}}
+      </router-link>
     </div>
     <br><p class="has-text-centered">
       <button class="button is-danger" @mousedown="remove">Delete</button>
@@ -64,7 +66,29 @@ export default {
         month.push(this.date.add(i, "day"));
       }
       return month;
-    }
+    },
+    prevMonthLink() {
+      const date = this.date.add(-1, "month");
+      return {
+        name: "goalMonth",
+        params: {
+          id: this.$route.params.id,
+          year: date.year(),
+          month: date.month()
+        }
+      };
+    },
+    nextMonthLink() {
+      const date = this.date.add(1, "month");
+      return {
+        name: "goalMonth",
+        params: {
+          id: this.$route.params.id,
+          year: date.year(),
+          month: date.month()
+        }
+      };
+    },
   },
   methods: {
     remove() {
@@ -72,18 +96,6 @@ export default {
         this.db.removeGoal(this.$route.params.id);
         this.$router.go(-1);
       }
-    },
-    monthGo(shift) {
-      this.rates = [];
-      const date = this.date.add(shift, "month");
-      this.$router.push({
-        name: "goalMonth",
-        params: {
-          id: this.$route.params.id,
-          year: date.year(),
-          month: date.month()
-        }
-      });
     },
     loadRates(goalId, date) {
       this.db

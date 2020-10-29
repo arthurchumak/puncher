@@ -1,14 +1,12 @@
 <template>
   <section class="section">
-    <h3 class="title is-3 has-text-centered" @mousedown="routeMonth">{{date.format('MMM YYYY')}}</h3>
+    <router-link to=".">
+      <h3 class="title is-3 has-text-centered">{{date.format('MMM YYYY')}}</h3>
+    </router-link>
     <div id="date">
-      <button
-        @mousedown="dateWalk(-1)"
-        class="button is-rounded"
-        style="width: 37px; margin: 4px;"
-      >←</button>
+      <router-link :to="prevDayLink" class="button is-rounded" style="width: 37px; margin: 4px;">←</router-link>
       <h3 class="title is-3">{{date.format('DD')}}</h3>
-      <button @mousedown="dateWalk(1)" class="button is-rounded" style="width: 37px; margin: 4px;">→</button>
+      <router-link :to="nextDayLink" class="button is-rounded" style="width: 37px; margin: 4px;">→</router-link>
     </div>
     <form @submit.prevent="submit">
       <div id="rater">
@@ -54,6 +52,30 @@ export default {
     date() {
       const params = this.$route.params;
       return dayjs(`${params.year}/${+params.month + 1}/${params.date}`);
+    },
+    nextDayLink() {
+      const newDate = this.date.add(1, "day");
+      return {
+        name: "rate",
+        params: {
+          id: this.$route.params.id,
+          year: newDate.year(),
+          month: newDate.month(),
+          date: newDate.date()
+        }
+      };
+    },
+    prevDayLink() {
+      const newDate = this.date.add(-1, "day");
+      return {
+        name: "rate",
+        params: {
+          id: this.$route.params.id,
+          year: newDate.year(),
+          month: newDate.month(),
+          date: newDate.date()
+        }
+      };
     }
   },
   methods: {
@@ -73,28 +95,6 @@ export default {
       );
       this.routeMonth();
     },
-    dateWalk(shift) {
-      const newDate = this.date.add(shift, "day");
-      this.$router.push({
-        name: "rate",
-        params: {
-          id: this.$route.params.id,
-          year: newDate.year(),
-          month: newDate.month(),
-          date: newDate.date()
-        }
-      });
-    },
-    routeMonth() {
-      this.$router.push({
-        name: "goalMonth",
-        params: {
-          id: this.$route.params.id,
-          year: this.date.year(),
-          month: this.date.month()
-        }
-      });
-    }
   },
   watch: {
     date: {
