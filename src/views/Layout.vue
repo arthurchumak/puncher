@@ -2,15 +2,13 @@
   <div v-if="$store.state.auth.user">
     <div id="navbar">
       <div class="item">
-        <a @mousedown="$router.push('/')">
-          ChromDays
-        </a>
+        <router-link :to="{ path: '/' }">ChromDays</router-link>
       </div>
 
       <div>
-        <a @mousedown="$router.push({name: 'profile'})">
+        <router-link :to="{ name: 'profile' }">
           <span class="icon is-large">☰</span>
-        </a>
+        </router-link>
       </div>
     </div>
 

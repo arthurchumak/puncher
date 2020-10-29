@@ -1,8 +1,8 @@
 <template>
   <div>
-    <a class="goal dark" v-for="(goal, id) of goals" :key="id" @mousedown="$router.push({name: 'goal', params: {id}})">{{goal.title}}</a>
+    <router-link class="goal dark" v-for="(goal, id) of goals" :key="id" :to="{ name: 'goal', params: {id} }">{{goal.title}}</router-link>
 
-    <a class="goal" @mousedown="$router.push({name: 'newgoal'})">+</a>
+    <router-link class="goal" :to="{ name: 'newgoal' }">+</router-link>
   </div>
 </template>
 
