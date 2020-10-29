@@ -2,7 +2,7 @@
   <div>
     <a @mousedown="$router.push({ name: 'goal', params: { id: $route.params.id } })">
       <h1 class="title is-1 has-text-centered">
-        <template v-if="goal">{{goal.title}}</template>
+        <template v-if="goal">{{goal}}</template>
         <template v-else>...</template>
       </h1>
     </a>
@@ -54,9 +54,8 @@ export default {
       return days;
     },
     date() {
-      return dayjs(
-        `${this.$route.params.year}/${this.$route.params.month + 1}/1`
-      ).startOf("month");
+      const date = new Date(+this.$route.params.year, +this.$route.params.month)
+      return dayjs(date).startOf("month");
     },
     month() {
       const month = [];
@@ -85,17 +84,20 @@ export default {
           month: date.month()
         }
       });
+    },
+    loadRates(goalId, date) {
+      this.db
+        .getRates(goalId, date)
+        .once("value", snapshot => {
+          this.rates = snapshot.val() || {};
+        });
     }
   },
   watch: {
     date: {
       immediate: true,
       handler(date) {
-        this.db
-          .getRates(this.$route.params.id, date)
-          .once("value", snapshot => {
-            this.rates = snapshot.val() || {};
-          });
+        this.loadRates(this.$route.params.id, date);
       }
     }
   }

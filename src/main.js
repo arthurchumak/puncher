@@ -41,7 +41,7 @@ Vue.prototype.db = {
     return this.db.ref(`/users/${this.userId()}/goals`);
   },
   getGoal(id) {
-    return this.db.ref(`/users/${this.userId()}/goals/${id}`);
+    return this.db.ref(`/users/${this.userId()}/goals/${id}/title`);
   },
   removeGoal(id) {
     this.db.ref(`/users/${this.userId()}/goals/${id}`).remove();

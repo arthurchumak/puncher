@@ -52,11 +52,8 @@ export default {
   },
   computed: {
     date() {
-      return dayjs(
-        `${this.$route.params.year}/${this.$route.params.month + 1}/${
-          this.$route.params.date
-        }`
-      );
+      const params = this.$route.params;
+      return dayjs(`${params.year}/${+params.month + 1}/${params.date}`);
     }
   },
   methods: {
