@@ -19,7 +19,7 @@
       </div>
       <textarea class="textarea" placeholder="Comment" v-model="comment"></textarea>
       <br>
-      <input class="button is-fullwidth" type="submit">
+      <input class="button is-fullwidth" :disabled="!valid" type="submit">
     </form>
   </section>
 </template>
@@ -49,6 +49,9 @@ export default {
     };
   },
   computed: {
+    valid() {
+      return this.selectedRate !== null;
+    },
     date() {
       const params = this.$route.params;
       return dayjs(`${params.year}/${+params.month + 1}/${params.date}`);
@@ -93,7 +96,7 @@ export default {
         this.selectedRate,
         this.comment || null
       );
-      this.routeMonth();
+      this.$router.go(-1);
     },
   },
   watch: {
