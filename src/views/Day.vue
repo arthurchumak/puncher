@@ -1,11 +1,10 @@
 <template>
   <section class="section">
-    <router-link to=".">
-      <h3 class="title is-3 has-text-centered">{{date.format('MMM YYYY')}}</h3>
-    </router-link>
     <div id="date">
       <router-link :to="prevDayLink" class="button is-rounded" style="width: 37px; margin: 4px;">←</router-link>
-      <h3 class="title is-3">{{date.format('DD')}}</h3>
+      <h3 class="title is-3">
+        <router-link to=".">{{date.format('YYYY/MM')}}</router-link>{{date.format('/DD')}}
+      </h3>
       <router-link :to="nextDayLink" class="button is-rounded" style="width: 37px; margin: 4px;">→</router-link>
     </div>
     <form @submit.prevent="submit">
@@ -119,6 +118,9 @@ export default {
 section {
   max-width: 800px;
   margin: auto;
+}
+.section {
+  padding: 0rem 1.5rem;
 }
 #date {
   display: flex;

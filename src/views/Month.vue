@@ -2,7 +2,7 @@
   <div>
     <div id="date-selector">
       <router-link :to="prevMonthLink" class="button is-rounded" style="width: 37px; margin: 4px;">←</router-link>
-      <h3 class="title is-3">{{date.format('MMM YYYY')}}</h3>
+      <h3 class="title is-3">{{date.format('YYYY/MM')}}</h3>
       <router-link :to="nextMonthLink" class="button is-rounded" style="width: 37px; margin: 4px;">→</router-link>
     </div>
     <div id="month" v-if="rates">

@@ -6,7 +6,6 @@
         <template v-else>...</template>
       </h1>
     </router-link>
-    <button class="button is-danger" @mousedown="remove">Delete</button>
     <router-view/>
   </div>
 </template>
@@ -24,13 +23,11 @@ export default {
       goal: null,
     };
   },
-  methods: {
-    remove() {
-      if (confirm("DELETE?")) {
-        this.db.removeGoal(this.$route.params.id);
-        this.$router.go(-1);
-      }
-    },
-  }
 }
 </script>
+
+<style scoped>
+h1 {
+  padding: 1rem 0rem;
+}
+</style>
