@@ -1,6 +1,6 @@
 <template>
   <div>
-    <router-link class="goal dark" v-for="(goal, id) of goals" :key="id" :to="`goal/${id}`">{{goal.title}}</router-link>
+    <router-link class="goal dark" v-for="goal of goals" :key="goal.id" :to="`goal/${goal.id}`">{{goal.title}}</router-link>
 
     <router-link class="goal" :to="{ name: 'newgoal' }">+</router-link>
   </div>

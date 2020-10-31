@@ -35,10 +35,10 @@ Vue.prototype.db = {
   },
   db: firebase.database(),
   addGoal(goal) {
-    return this.db.ref(`/users/${this.userId()}/goals`).push(goal);
+    return this.db.ref(`/users/${this.userId()}/goals/list`).push(goal);
   },
   getGoals() {
-    return this.db.ref(`/users/${this.userId()}/goals`);
+    return this.db.ref(`/users/${this.userId()}/goals/list`);
   },
   getGoal(id) {
     return this.db.ref(`/users/${this.userId()}/goals/${id}/title`);

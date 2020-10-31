@@ -32,7 +32,8 @@ export default {
   methods: {
     addGoal() {
       this.db.addGoal({
-        title: this.name
+        title: this.name,
+        id: Date.now()
       });
       this.$router.go(-1);
     }
