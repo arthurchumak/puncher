@@ -4,6 +4,7 @@ import Router from "vue-router";
 import dayjs from "dayjs";
 
 import Day from "./views/Day";
+import Goal from "./views/Goal";
 import Goals from "./views/Goals";
 import Layout from "./views/Layout";
 import Login from "./views/Login";
@@ -40,29 +41,35 @@ const router = new Router({
           component: NewGoal
         },
         {
-          path: "/goal/:id/",
+          path: "/goal/:id",
           name: "goal",
-          redirect: to => {
-            const today = dayjs();
-            return {
+          component: Goal,
+          children: [
+            {
+              path: ":year/:month",
               name: "goalMonth",
-              params: {
-                id: to.params.id,
-                year: today.year(),
-                month: today.month()
+              component: Month
+            },
+            {
+              path: ":year/:month/:date",
+              name: "rate",
+              component: Day
+            },
+            {
+              path: "/",
+              redirect: to => {
+                const today = dayjs();
+                return {
+                  name: "goalMonth",
+                  params: {
+                    id: to.params.id,
+                    year: today.year(),
+                    month: today.month()
+                  }
+                };
               }
-            };
-          }
-        },
-        {
-          path: "/goal/:id/:year/:month",
-          name: "goalMonth",
-          component: Month
-        },
-        {
-          path: "/goal/:id/:year/:month/:date",
-          name: "rate",
-          component: Day
+            },
+          ]
         },
         {
           path: "/profile",

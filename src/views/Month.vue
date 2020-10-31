@@ -1,11 +1,5 @@
 <template>
   <div>
-    <router-link to="..">
-      <h1 class="title is-1 has-text-centered">
-        <template v-if="goal">{{goal}}</template>
-        <template v-else>...</template>
-      </h1>
-    </router-link>
     <div id="date-selector">
       <router-link :to="prevMonthLink" class="button is-rounded" style="width: 37px; margin: 4px;">←</router-link>
       <h3 class="title is-3">{{date.format('MMM YYYY')}}</h3>
@@ -23,9 +17,6 @@
         {{day.date()}}
       </router-link>
     </div>
-    <br><p class="has-text-centered">
-      <button class="button is-danger" @mousedown="remove">Delete</button>
-    </p>
   </div>
 </template>
 
@@ -33,14 +24,8 @@
 import dayjs from "dayjs";
 
 export default {
-  created() {
-    this.db.getGoal(this.$route.params.id).on("value", snapshot => {
-      this.goal = snapshot.val();
-    });
-  },
   data() {
     return {
-      goal: null,
       rates: {}
     };
   },
@@ -91,12 +76,6 @@ export default {
     },
   },
   methods: {
-    remove() {
-      if (confirm("DELETE?")) {
-        this.db.removeGoal(this.$route.params.id);
-        this.$router.go(-1);
-      }
-    },
     loadRates(goalId, date) {
       this.db
         .getRates(goalId, date)
